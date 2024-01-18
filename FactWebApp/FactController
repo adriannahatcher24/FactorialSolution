@@ -1,0 +1,22 @@
+namespace FactController;
+using FactLibrary;
+
+public class FactController : Controller{
+    public FactController(){
+        factorialCalculator = new FactorialCalculator();
+    }
+
+    public IActionResult Index(){
+        int number =5;
+        long factorialResult;
+
+        try{
+            factorialResult = factorialCalculator.Calculate(number);
+        }
+        catch (Exception ex){
+            return View("Error", ex.Message);
+        }
+        return View(factorialResult);
+    }
+
+}
