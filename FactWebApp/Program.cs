@@ -15,21 +15,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.MapGet("/factorial/{number}", async (HttpContext context, int number) => 
+app.MapGet("/factorial/{number}", (HttpContext context, int number) => 
 {
     var calculator = new FactorialCalculator.FactorialCalc(); 
-    long result;
-    try
-    {
-        result = calculator.Calculate(number);
-    }
-    catch (Exception ex)
-    {
-        context.Response.StatusCode = 400; 
-        await context.Response.WriteAsync(ex.Message);
-        return;
-    }
-    await context.Response.WriteAsync($"The factorial of {number} is: {result}");
+    long result = calculator.Calculate(number);;
+   
+    return $"The factorial of {number} is: {result}";
 });
 
 app.Run();
