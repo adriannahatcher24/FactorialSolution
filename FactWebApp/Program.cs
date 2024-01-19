@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using FactorialCalculator; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,15 +15,22 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Fact}/{action=Index}/{id?}");
+app.MapGet("/factorial/{number}", async (HttpContext context, int number) => 
+{
+    var calculator = new FactorialCalculator.FactorialCalc(); 
+    long result;
+    try
+    {
+        result = calculator.Calculate(number);
+    }
+    catch (Exception ex)
+    {
+        context.Response.StatusCode = 400; 
+        await context.Response.WriteAsync(ex.Message);
+        return;
+    }
+    await context.Response.WriteAsync($"The factorial of {number} is: {result}");
+});
 
 app.Run();
 
