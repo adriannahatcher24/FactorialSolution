@@ -1,13 +1,15 @@
-namespace FactController;
+namespace FactController.Controllers;
 using FactLibrary;
 
-public class FactController : Controller{
+public class FactController : Controller
+{
+      private readonly FactorialCalculator factorialCalculator;
     public FactController(){
         factorialCalculator = new FactorialCalculator();
     }
 
     public IActionResult Index(){
-        int number =5;
+        int number = 5;
         long factorialResult;
 
         try{

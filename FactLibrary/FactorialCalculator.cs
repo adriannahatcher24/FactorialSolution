@@ -1,6 +1,6 @@
-﻿namespace FactLibrary;
+﻿namespace FactorialCalculator;
 
-public class FactorialCalculator
+public class FactorialCalc
 {
     public long Calculate(int number)
     {
